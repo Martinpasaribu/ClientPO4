@@ -6,17 +6,31 @@ import useSWR, { useSWRConfig } from "swr";
 const ProductList = () => {
   const { mutate } = useSWRConfig();
   const fetcher = async () => {
-    const response = await axios.get("http://localhost:5000/products");
+    const response = await axios.get("https://mern4-two.vercel.app/products");
     return response.data;
   };
 
   const { data } = useSWR("products", fetcher);
   if (!data) return <h2>Loading...</h2>;
+   
+  // const deleteProduct = async (productId) => {
+  //   await axios.delete(`https://mern4-two.vercel.app/products/${productId}`);
+  //   mutate("products");
+  // };
 
   const deleteProduct = async (productId) => {
-    await axios.delete(`http://localhost:5000/products/${productId}`);
-    mutate("products");
+    try {
+      await axios.delete(`https://mern4-two.vercel.app/products/${productId}`);
+      mutate("products");
+    } catch (error) {
+      console.error("Error deleting product:", error.message);
+      // Lakukan sesuatu jika terjadi kesalahan saat menghapus produk,
+      // seperti menampilkan pesan kepada pengguna atau melakukan penanganan lebih lanjut.
+    }
   };
+  
+
+
 
   return (
     <div className="flex flex-col mt-5">

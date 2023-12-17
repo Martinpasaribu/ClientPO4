@@ -9,7 +9,7 @@ const AddProduct = () => {
 
   const saveProduct = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:5000/products", {
+    await axios.post("https://mern4-two.vercel.app/products", {
       name: name,
       price: parseInt(price),
     });
